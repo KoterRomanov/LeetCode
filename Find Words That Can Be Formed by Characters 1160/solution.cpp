@@ -1,18 +1,34 @@
 class Solution {
 public:
     int countCharacters(vector<string>& words, string chars) {
-        string total = string();
-        for( vector<string>::iterator it = words.begin(); it != words.end(); ++it )
+        int total = 0;
+        for ( auto str : words )
         {
-            string temp = *it;
-            for(int index = 0; index < temp.length(); ++index)
+            if ( str.size() > chars.size() )
+                continue;
+            
+            bool flag = true;
+            string temporary = chars;
+            for ( auto ch : str )
             {
-                char charactor = temp.at(index);
-                if ( chars.find(charactor) == string::npos )    break;
-                if ( index == (temp.length()-1) )   total.append(temp);
+               if ( string::npos == temporary.find(ch) )
+               {
+                   flag = false;
+                   break;
+               }
+                
+               temporary[temporary.find(ch)] = ' ';
+                
+            }
+            
+            if ( flag )
+            {
+                total += str.size();
             }
         }
         
-        return total.length();
+        
+        
+        return total;
     }
 };
